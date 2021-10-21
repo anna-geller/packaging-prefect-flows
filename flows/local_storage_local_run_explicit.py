@@ -13,7 +13,7 @@ def hello_world():
 
 
 with Flow(
-    "local_storage_local_flow_explicit",
+    "local_storage_local_run_explicit",
     storage=Local(),
     run_config=LocalRun(labels=["dev"]),
 ) as flow:

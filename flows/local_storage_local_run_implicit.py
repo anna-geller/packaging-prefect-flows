@@ -10,7 +10,7 @@ def hello_world():
     print("hello world")
 
 
-with Flow("local_storage_local_flow_implicit") as flow:
+with Flow("local_storage_local_run_implicit") as flow:
     hw = hello_world()
 
 if __name__ == "__main__":

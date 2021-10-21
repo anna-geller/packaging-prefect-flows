@@ -17,7 +17,7 @@ def hello_world():
 
 
 with Flow(
-    "local_storage_local_flow_explicit_custom_modules",
+    "local_storage_local_run_explicit_custom_modules",
     storage=Local(),
     run_config=LocalRun(labels=["dev"]),
 ) as flow:
