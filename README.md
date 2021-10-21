@@ -9,7 +9,7 @@ as shown in ``commands.bash``
 
 ## Kubernetes Secrets for ``image_pull_secrets``
 In order to get a custom image from a remote private container image repository, 
-you need to create a Kubernetes secret object as pass it to the ``KubernetesRun`` 
+you need to create a Kubernetes secret object and pass it to the ``KubernetesRun`` 
 
 Here is an example for AWS ECR:
     
