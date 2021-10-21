@@ -12,6 +12,7 @@ To use the stored_as_script=True in Docker, we need the following arguments to b
 from prefect import Flow, task
 from prefect.storage import Docker
 from prefect.run_configs import DockerRun
+
 # the import below are only to demonstrate that custom modules were installed in the ECR image "community"
 from flow_utilities.db import get_df_from_sql_query
 
@@ -34,10 +35,7 @@ def hello_world():
 with Flow(
     FLOW_NAME,
     storage=docker_storage,
-    run_config=DockerRun(
-        image="community:latest",
-        labels=["docker"],
-    ),
+    run_config=DockerRun(image="community:latest", labels=["docker"],),
 ) as flow:
     hw = hello_world()
 

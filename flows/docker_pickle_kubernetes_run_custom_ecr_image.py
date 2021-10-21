@@ -1,6 +1,7 @@
 from prefect import Flow, task
 from prefect.storage import Docker
 from prefect.run_configs import KubernetesRun
+
 # the import below are only to demonstrate that custom modules were installed in the ECR image "community"
 from flow_utilities.db import get_df_from_sql_query
 
@@ -22,13 +23,13 @@ def hello_world():
 
 
 with Flow(
-        FLOW_NAME,
-        storage=docker_storage,
-        run_config=KubernetesRun(
-            image="123456789.dkr.ecr.eu-central-1.amazonaws.com/community:latest",
-            labels=["k8s"],
-            image_pull_secrets=["aws-ecr-secret"],
-        ),
+    FLOW_NAME,
+    storage=docker_storage,
+    run_config=KubernetesRun(
+        image="123456789.dkr.ecr.eu-central-1.amazonaws.com/community:latest",
+        labels=["k8s"],
+        image_pull_secrets=["aws-ecr-secret"],
+    ),
 ) as flow:
     hw = hello_world()
 

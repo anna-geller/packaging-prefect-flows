@@ -1,18 +1,23 @@
+"""
+To use local storage with KubernetesRun (and Kubernetes agent), we need to:
+- set `stored_as_script=True`
+- provide a path on container, rather than on a local disk
+- ensure to `add_default_labels=False` otherwise the host name of the Local storage will be added to the labels,
+    causing that the flow will not match with the Docker agent
+"""
 from prefect import Flow, task
-from prefect.storage import S3
+from prefect.storage import Local
 from prefect.run_configs import KubernetesRun
 
 # the import below are only to demonstrate that custom modules were installed in the ECR image "community"
 from flow_utilities.db import get_df_from_sql_query
 
-FLOW_NAME = "s3_kubernetes_run_custom_ecr_image"
 
-STORAGE = S3(
-    bucket="prefect-datasets",
-    key=f"flows/{FLOW_NAME}.py",
+FLOW_NAME = "local_script_kubernetes_run_custom_ecr_image"
+storage = Local(
+    path=f"/opt/prefect/flows/{FLOW_NAME}.py",
     stored_as_script=True,
-    # if you add local_script_path, Prefect will upload the local Flow script to S3 during registration
-    local_script_path=f"flows/{FLOW_NAME}.py",
+    add_default_labels=False,
 )
 
 
@@ -25,7 +30,7 @@ def hello_world():
 
 with Flow(
     FLOW_NAME,
-    storage=STORAGE,
+    storage=storage,
     run_config=KubernetesRun(
         image="123456789.dkr.ecr.eu-central-1.amazonaws.com/community:latest",
         labels=["k8s"],
@@ -33,3 +38,6 @@ with Flow(
     ),
 ) as flow:
     hw = hello_world()
+
+if __name__ == "__main__":
+    flow.register(project_name="community")

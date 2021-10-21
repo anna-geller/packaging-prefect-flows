@@ -12,6 +12,7 @@ To use flow script files in Docker, we need the following arguments to be set pr
 from prefect import Flow, task
 from prefect.storage import Docker
 from prefect.run_configs import KubernetesRun
+
 # the import below are only to demonstrate that custom modules were installed in the ECR image "community"
 from flow_utilities.db import get_df_from_sql_query
 

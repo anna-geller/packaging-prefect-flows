@@ -5,6 +5,7 @@ prefect agent local start --label dev
 from prefect import task, Flow
 from prefect.storage.local import Local
 from prefect.run_configs import LocalRun
+
 # as long as those custom modules are installed on the local agent with label "dev"
 # and on the machine from which you register the flow, this will work
 from flow_utilities.db import get_df_from_sql_query
