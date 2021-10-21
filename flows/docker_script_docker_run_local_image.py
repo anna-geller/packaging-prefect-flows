@@ -16,7 +16,7 @@ from prefect.run_configs import DockerRun
 from flow_utilities.db import get_df_from_sql_query
 
 
-FLOW_NAME = "docker_stored_as_script_docker_run_local_image"
+FLOW_NAME = "docker_script_docker_run_local_image"
 docker_storage = Docker(
     image_name="community",
     image_tag="latest",

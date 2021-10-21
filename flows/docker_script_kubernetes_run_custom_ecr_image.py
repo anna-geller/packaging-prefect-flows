@@ -16,7 +16,7 @@ from prefect.run_configs import KubernetesRun
 from flow_utilities.db import get_df_from_sql_query
 
 
-FLOW_NAME = "docker_stored_as_script_kubernetes_run_custom_ecr_image"
+FLOW_NAME = "docker_script_kubernetes_run_custom_ecr_image"
 docker_storage = Docker(
     image_name="community",
     image_tag="latest",
