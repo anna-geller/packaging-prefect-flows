@@ -12,16 +12,18 @@ To use flow script files in Docker, we need the following arguments to be set pr
 from prefect import Flow, task
 from prefect.storage import Docker
 from prefect.run_configs import KubernetesRun
+from prefect.client.secrets import Secret
 
 # the import below are only to demonstrate that custom modules were installed in the ECR image "community"
 from flow_utilities.db import get_df_from_sql_query
 
 
+AWS_ACCOUNT_ID = Secret("AWS_ACCOUNT_ID").get()
 FLOW_NAME = "docker_script_kubernetes_run_custom_ecr_image"
 docker_storage = Docker(
     image_name="community",
     image_tag="latest",
-    registry_url="123456789.dkr.ecr.eu-central-1.amazonaws.com",
+    registry_url=f"{AWS_ACCOUNT_ID}.dkr.ecr.eu-central-1.amazonaws.com",
     stored_as_script=True,
     path=f"/opt/prefect/flows/{FLOW_NAME}.py",
 )
@@ -38,7 +40,7 @@ with Flow(
     FLOW_NAME,
     storage=docker_storage,
     run_config=KubernetesRun(
-        image="123456789.dkr.ecr.eu-central-1.amazonaws.com/community:latest",
+        image=f"{AWS_ACCOUNT_ID}.dkr.ecr.eu-central-1.amazonaws.com/community:latest",
         labels=["k8s"],
         image_pull_secrets=["aws-ecr-secret"],
     ),
