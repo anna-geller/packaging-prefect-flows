@@ -34,6 +34,3 @@ with Flow(
     run_config=DockerRun(image="community:latest", labels=["docker"],),
 ) as flow:
     hw = hello_world()
-
-if __name__ == "__main__":
-    flow.register(project_name="community")

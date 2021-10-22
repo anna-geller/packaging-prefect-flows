@@ -18,6 +18,3 @@ with Flow(
     run_config=LocalRun(labels=["dev"]),
 ) as flow:
     hw = hello_world()
-
-if __name__ == "__main__":
-    flow.register(project_name="community")

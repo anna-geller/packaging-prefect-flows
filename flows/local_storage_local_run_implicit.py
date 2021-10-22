@@ -12,6 +12,3 @@ def hello_world():
 
 with Flow("local_storage_local_run_implicit") as flow:
     hw = hello_world()
-
-if __name__ == "__main__":
-    flow.register(project_name="community")
