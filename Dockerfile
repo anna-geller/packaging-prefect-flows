@@ -7,3 +7,4 @@ COPY setup.py .
 RUN pip install .
 COPY flows/ /opt/prefect/flows/
 COPY flows_no_build/ /opt/prefect/flows/
+COPY flows_task_library/ /opt/prefect/flows/
