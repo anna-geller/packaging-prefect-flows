@@ -70,7 +70,7 @@ def get_pod_ids(api_response):
 
 @task(log_stdout=True)
 def get_our_pod_name(pods):
-    dummy_pods = [i for i in pods if i.startswith("dummy")]
+    dummy_pods = [i for i in pods if i.startswith(JOB_NAME)]
     if len(dummy_pods) > 1:
         raise VALIDATIONFAIL("More than one dummy pod")
     result = dummy_pods[0]
