@@ -1,9 +1,12 @@
+"""
+Example from https://medium.com/slateco-blog/prefect-x-kubernetes-x-ephemeral-dask-power-without-responsibility-6e10b4f2fe40
+"""
 from dask_kubernetes import KubeCluster, make_pod_spec
-from prefect.storage import Docker, GitHub
+import prefect
 from prefect import task, Flow
 from prefect.executors import DaskExecutor
-import prefect
 from prefect.run_configs import KubernetesRun
+from prefect.storage import GitHub
 
 # Configure a storage object, by default prefect's latest image will be used
 FLOW_NAME = "github_kubernetes_run_ephemeral_dask"
@@ -39,10 +42,9 @@ with Flow(
     run_config=KubernetesRun(
         labels=["dask"],
         image="annageller/prefect-dask-k8s:latest",
-        # image_pull_secrets=["dockerhub"],
     ),
 ) as flow:
-    numbers = extract()
-    tranformed_numbers = transform.map(numbers)
+    nrs = extract()
+    tranformed_numbers = transform.map(nrs)
     numbers_twice = transform.map(tranformed_numbers)
     result = load(numbers=numbers_twice)
