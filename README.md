@@ -47,3 +47,28 @@ Note that ``prefectdemo`` is the registry name we've used. Change this name by y
     --docker-server=prefectdemos.azurecr.io \
     --docker-username=prefectdemos \
     --docker-password=$SP_PASSWD
+
+
+### Google Container Registry
+
+First, you may follow [this walkthrough](https://blog.container-solutions.com/using-google-container-registry-with-kubernetes) 
+to create a service account key in GCP. 
+As a result, you should download the JSON key, as described [here](https://cloud.google.com/container-registry/docs/advanced-authentication#json-key). 
+
+Then, to push your image, you need to authenticate to GCR, and then tag and push the image. 
+
+    gcloud auth configure-docker gcr.io
+    docker tag community:latest gcr.io/prefect-community/demos/community:latest
+    docker push gcr.io/prefect-community/demos/community:latest
+
+To authenticate your ``KubernetesRun``, create the Kubernetes secret with this key, adjust the path in the command below and run it:
+
+    kubectl create secret docker-registry gcr-secret \
+    --docker-server=gcr.io \
+    --docker-username=_json_key \
+    --docker-password="$(cat ~/Downloads/YOUR_KEY_FILE_NAME.json)" \
+    --docker-email=example@gmail.com
+
+To authenticate your ``DockerAgent`` with GCR, you can use the same JSON key with the following command:
+
+    cat ~/Downloads/YOUR_KEY_FILE_NAME.json | docker login -u _json_key --password-stdin https://gcr.io
