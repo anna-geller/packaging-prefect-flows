@@ -1,7 +1,7 @@
 """
-Within the JSON file "prefect_flow_task_definition.json",
-make sure to replace the AWS account ID 123456789 by your Account ID!
-Then upload the JSON file to S3 and modify the "task_definition_path" accordingly to your path
+Within the YAML file "flow_task_definition.yaml",
+make sure to replace the AWS account ID XXX by your Account ID!
+Then upload the file to S3 and modify the "task_definition_path" accordingly
 """
 import prefect
 from prefect import Flow, task
@@ -23,7 +23,7 @@ STORAGE = S3(
 
 RUN_CONFIG = ECSRun(
     labels=["prod"],
-    task_definition_path="s3://prefectdata/prefect_flow_task_definition.json",
+    task_definition_path="s3://prefectdata/flow_task_definition.yaml",
     run_task_kwargs=dict(cluster="prefectEcsCluster"),
 )
 

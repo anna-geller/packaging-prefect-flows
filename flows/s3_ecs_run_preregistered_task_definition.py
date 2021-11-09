@@ -3,6 +3,8 @@ Within the JSON file "prefect_flow_task_definition.json",
 make sure to replace the AWS account ID 123456789 by your Account ID!
 Then register it using this command:
     aws ecs register-task-definition --cli-input-json file://prefect_flow_task_definition.json
+Or if you use a YAML file instead such as in `flow_task_definition.yaml` in this folder:
+    aws ecs register-task-definition --cli-input-yaml file://flow_task_definition.yaml
 Then, you can reference it in "task_definition_arn" using "family:revision"
 """
 import prefect

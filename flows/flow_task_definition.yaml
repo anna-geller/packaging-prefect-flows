@@ -1,0 +1,24 @@
+family: prefectFlow
+requiresCompatibilities:
+  - FARGATE
+networkMode: awsvpc
+cpu: 1024
+memory: 2048
+taskRoleArn: arn:aws:iam::XXX:role/prefectTaskRole
+executionRoleArn: arn:aws:iam::XXX:role/prefectECSAgentTaskExecutionRole
+containerDefinitions:
+  - name: flow
+      image: "XXX.dkr.ecr.us-east-1.amazonaws.com/image_name:latest"
+      essential: true
+      environment:
+        - name: AWS_RETRY_MODE
+            value: "adaptive"
+        - name: AWS_MAX_ATTEMPTS
+            value: "10"
+      logConfiguration:
+      logDriver: awslogs
+      options:
+        awslogs-group: "/ecs/prefectEcsAgent"
+        awslogs-region: "us-east-1"
+        awslogs-stream-prefix: "ecs"
+        awslogs-create-group: "true"
