@@ -1,3 +1,10 @@
+"""
+Create a Service Account and JSON key e.g. with Basic Owner permissions
+export GOOGLE_APPLICATION_CREDENTIALS="/Your/path/to/key.json"
+pip install prefect --upgrade
+pip install "prefect[gcp]" --upgrade
+prefect agent vertex start --project prefect-community --label vertex
+"""
 import prefect
 from prefect import Flow, task
 from prefect.run_configs import VertexRun
