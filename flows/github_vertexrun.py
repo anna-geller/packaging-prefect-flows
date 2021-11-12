@@ -10,7 +10,7 @@ STORAGE = GitHub(
     path=f"flows/{FLOW_NAME}.py",
     access_token_secret="GITHUB_ACCESS_TOKEN",  # required with private repositories
 )
-RUN_CONFIG = VertexRun()
+RUN_CONFIG = VertexRun(labels=["vertex"])
 
 
 @task(log_stdout=True)
