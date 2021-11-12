@@ -20,5 +20,5 @@ def hello_world():
     return text
 
 
-with Flow(FLOW_NAME, run_config=RUN_CONFIG,) as flow:
+with Flow(FLOW_NAME, run_config=RUN_CONFIG, storage=STORAGE) as flow:
     hw = hello_world()
