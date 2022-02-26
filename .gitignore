@@ -133,3 +133,6 @@ dmypy.json
 .idea/modules.xml
 .idea/packaging-prefect-flows.iml
 .idea/vcs.xml
+gcs_sa.json
+flows/timestream_flow.py
+flows/timestream.py
