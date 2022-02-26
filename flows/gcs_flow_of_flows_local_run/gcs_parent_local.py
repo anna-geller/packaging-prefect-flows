@@ -7,21 +7,22 @@ export GOOGLE_APPLICATION_CREDENTIALS="/Users/anna/repos/packaging-prefect-flows
 To see how to generate this file, see: https://cloud.google.com/docs/authentication/getting-started
 
 To start an agent for this flow:
-prefect agent local start --label gcs --no-hostname-label
+prefect agent local start --label gcs_local --no-hostname-label
 
 From another terminal:
 prefect register --project community -p flows/gcs_flow_of_flows_local_run/
 
 Then:
-prefect run --name gcs_parent --project community --watch
+prefect run --name gcs_parent_local --project community --watch
 """
 from prefect import Flow, task
 from prefect.storage import GCS
 from prefect.run_configs import LocalRun
 from prefect.tasks.prefect import create_flow_run
+import uuid
 
-FLOW_NAME = "gcs_parent"
-AGENT_LABEL = "gcs"
+FLOW_NAME = "gcs_parent_local"
+AGENT_LABEL = "gcs_local"
 STORAGE = GCS(
     bucket="prefect-community",
     key=f"flows/gcs_flow_of_flows_local_run/{FLOW_NAME}.py",
@@ -42,7 +43,10 @@ def hello_world():
 with Flow(FLOW_NAME, storage=STORAGE, run_config=RUN_CONFIG,) as flow:
     hw = hello_world()
     create_flow_run(
-        flow_name="gcs_child", project_name="community", parameters=dict(user_input=hw),
+        flow_name="gcs_child_local",
+        project_name="community",
+        parameters=dict(user_input=hw),
+        idempotency_key=str(uuid.uuid4()),
     )
 
 if __name__ == "__main__":

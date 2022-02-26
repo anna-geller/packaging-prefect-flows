@@ -16,6 +16,7 @@ from prefect.storage import GCS
 from prefect.run_configs import DockerRun
 from prefect.tasks.prefect import create_flow_run
 import subprocess
+import uuid
 
 FLOW_NAME = "gcs_parent_docker"
 AGENT_LABEL = "gcs_docker"
@@ -44,6 +45,7 @@ with Flow(FLOW_NAME, storage=STORAGE, run_config=RUN_CONFIG,) as flow:
         flow_name="gcs_child_docker",
         project_name=PREFECT_PROJECT_NAME,
         parameters=dict(user_input=hw),
+        idempotency_key=str(uuid.uuid4()),
     )
 
 if __name__ == "__main__":
