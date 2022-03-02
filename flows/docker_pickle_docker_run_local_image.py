@@ -2,7 +2,7 @@ from prefect import Flow, task
 from prefect.storage import Docker
 from prefect.run_configs import DockerRun
 
-# the import below are only to demonstrate that custom modules were installed in the ECR image "community"
+# the import below is only to demonstrate that custom modules were installed in the ECR image "community"
 from flow_utilities.db import get_df_from_sql_query
 
 

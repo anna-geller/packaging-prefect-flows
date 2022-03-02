@@ -10,7 +10,7 @@ from prefect.storage import Local
 from prefect.run_configs import KubernetesRun
 from prefect.client.secrets import Secret
 
-# the import below are only to demonstrate that custom modules were installed in the ECR image "community"
+# the import below is only to demonstrate that custom modules were installed in the ECR image "community"
 from flow_utilities.db import get_df_from_sql_query
 
 AWS_ACCOUNT_ID = Secret("AWS_ACCOUNT_ID").get()
