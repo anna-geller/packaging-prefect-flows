@@ -26,11 +26,14 @@ docker_storage = Docker(
 
 @task(log_stdout=True)
 def hello_world():
-    text = f"hello from {FLOW_NAME} from a new Azure VM after a reboot!"
+    text = f"hello from {FLOW_NAME} from a new Azure VM after a reboot and with long-lived ACR permissions!"
     print(text)
     # the imports below are only to demonstrate that custom modules were installed in the image
     import pandas
     import awswrangler
+    print("printing package versions")
+    print(pandas.__version__)
+    print(awswrangler.__version__)
     return text
 
 
