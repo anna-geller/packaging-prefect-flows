@@ -1,9 +1,9 @@
 """
-Te contents of .env file in this root project dir (.env file is obviously not committed):
+The example contents of .env file in this root project dir (.env file is obviously not committed):
 ENV_1=value_1
 ENV_2=value_2
 
-
+Usage in CLI:
 prefect agent docker start -l local_docker
 prefect register --project xyz -p flows/docker_pickle_docker_run_envfile_example.py
 prefect run --name docker_pickle_docker_run_envfile_example --watch
