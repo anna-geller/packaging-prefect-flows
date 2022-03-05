@@ -40,10 +40,14 @@ with Flow(FLOW_NAME, storage=STORAGE, run_config=RUN_CONFIG,) as flow:
         run_config=DockerRun(
             labels=[AGENT_LABEL], image="prefecthq/prefect:1.0.0-python3.9"
         ),
+        task_args=dict(name="First subflow with Python 3.9 image"),
         upstream_tasks=[normal_non_subflow_task],
     )
     first_child_flowrunview = wait_for_flow_run(
-        first_child_flow_run_id, raise_final_state=True, stream_logs=True
+        first_child_flow_run_id,
+        raise_final_state=True,
+        stream_logs=True,
+        task_args=dict(name="Wait for the first subflow"),
     )
     # === SECOND FLOW WITH PYTHON 3.8 DOCKER IMAGE  ===
     second_child_flow_run_id = create_flow_run(
@@ -53,10 +57,14 @@ with Flow(FLOW_NAME, storage=STORAGE, run_config=RUN_CONFIG,) as flow:
         run_config=DockerRun(
             labels=[AGENT_LABEL], image="prefecthq/prefect:1.0.0-python3.8"
         ),
+        task_args=dict(name="Second subflow with Python 3.8 image"),
         upstream_tasks=[first_child_flowrunview],
     )
     second_child_flowrunview = wait_for_flow_run(
-        second_child_flow_run_id, raise_final_state=True, stream_logs=True
+        second_child_flow_run_id,
+        raise_final_state=True,
+        stream_logs=True,
+        task_args=dict(name="Wait for the second subflow"),
     )
     # === FIRST FLOW AGAIN BUT WITH PYTHON 3.7 DOCKER IMAGE  ===
     again_first_child_flow_run_id = create_flow_run(
@@ -67,10 +75,14 @@ with Flow(FLOW_NAME, storage=STORAGE, run_config=RUN_CONFIG,) as flow:
             labels=[AGENT_LABEL], image="prefecthq/prefect:1.0.0-python3.7"
         ),
         # idempotency_key=str(uuid.uuid4()),
+        task_args=dict(name="First subflow with Python 3.7 image"),
         upstream_tasks=[second_child_flowrunview],
     )
     first_child_flowrunview = wait_for_flow_run(
-        again_first_child_flow_run_id, raise_final_state=True, stream_logs=True
+        again_first_child_flow_run_id,
+        raise_final_state=True,
+        stream_logs=True,
+        task_args=dict(name="Wait for the first subflow with 3.7 image"),
     )
 if __name__ == "__main__":
     subprocess.run(
