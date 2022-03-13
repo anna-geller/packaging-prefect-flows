@@ -1,0 +1,10 @@
+cluster: prefectEcsCluster
+capacityProviderStrategy:
+  - capacityProvider: FARGATE_SPOT
+    weight: 1
+    base: 0
+networkConfiguration:
+  awsvpcConfiguration:
+    subnets: [subnet-5c44cb03,subnet-0f81d342,subnet-664c9a57]
+    securityGroups: []
+    assignPublicIp: ENABLED

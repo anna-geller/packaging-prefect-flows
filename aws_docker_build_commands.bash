@@ -3,6 +3,6 @@ docker build -t community .
 docker run --rm -it community
 aws ecr create-repository --repository-name community --image-scanning-configuration scanOnPush=true
 
-docker tag community:latest 123456789.dkr.ecr.eu-central-1.amazonaws.com/community:latest
-aws ecr get-login-password | docker login --username AWS --password-stdin 123456789.dkr.ecr.eu-central-1.amazonaws.com
-docker push 123456789.dkr.ecr.eu-central-1.amazonaws.com/community:latest
+docker tag community:latest 338306982838.dkr.ecr.us-east-1.amazonaws.com/community:latest
+aws ecr get-login-password | docker login --username AWS --password-stdin 338306982838.dkr.ecr.us-east-1.amazonaws.com
+docker push 338306982838.dkr.ecr.us-east-1.amazonaws.com/community:latest

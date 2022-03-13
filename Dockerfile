@@ -1,4 +1,4 @@
-FROM prefecthq/prefect:1.0.0-python3.8
+FROM prefecthq/prefect:1.1.0-python3.9
 RUN /usr/local/bin/python -m pip install --upgrade pip
 WORKDIR /opt/prefect
 COPY flow_utilities/ /opt/prefect/flow_utilities/
