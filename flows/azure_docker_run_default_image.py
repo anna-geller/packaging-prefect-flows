@@ -4,6 +4,8 @@ Then, store the connection string as a Secret named AZURE_STORAGE_CONNECTION_STR
 
 Finally, create a blog container and set it as name e.g. "flows" blob container
 """
+import platform
+import prefect
 from prefect import Flow, task
 from prefect.storage import Azure
 from prefect.run_configs import DockerRun
@@ -17,9 +19,15 @@ STORAGE = Azure(
 
 @task(log_stdout=True)
 def hello_world():
-    text = f"hello from {FLOW_NAME}"
-    print(text)
-    return text
+    logger = prefect.context.get("logger")
+    logger.info("Hello from %s", FLOW_NAME)
+    logger.info(
+        "Platform information: IP = %s, Python = %s, Platform type = %s, OS Version = %s",
+        platform.node(),
+        platform.python_version(),
+        platform.platform(),
+        platform.version(),
+    )
 
 
 with Flow(

@@ -6,8 +6,10 @@ Make sure your custom module is installed within your registration environment:
 pip install .
 
 Then, register the flow:
-prefect register --project community -p flows/docker_pickle_docker_run_acr_image.py
+prefect register --project azure -p flows/docker_pickle_docker_run_acr_image.py
 """
+import platform
+import prefect
 from prefect import Flow, task
 from prefect.storage import Docker
 from prefect.run_configs import DockerRun
@@ -27,9 +29,15 @@ docker_storage = Docker(
 
 @task(log_stdout=True)
 def hello_world():
-    text = f"hello from {FLOW_NAME}"
-    print(text)
-    return text
+    logger = prefect.context.get("logger")
+    logger.info("Hello from %s", FLOW_NAME)
+    logger.info(
+        "Platform information: IP = %s, Python = %s, Platform type = %s, OS Version = %s",
+        platform.node(),
+        platform.python_version(),
+        platform.platform(),
+        platform.version(),
+    )
 
 
 with Flow(

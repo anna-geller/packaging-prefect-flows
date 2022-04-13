@@ -18,6 +18,8 @@ pip install .
 Then, register the flow by executing the Python script (you can also do that from iPython but not prefect register CLI):
 python flows_no_build/docker_script_docker_run_acr_image.py
 """
+import platform
+import prefect
 from prefect import Flow, task
 from prefect.storage import Docker
 from prefect.run_configs import DockerRun
@@ -38,9 +40,15 @@ docker_storage = Docker(
 
 @task(log_stdout=True)
 def hello_world():
-    text = f"hello from {FLOW_NAME}"
-    print(text)
-    return text
+    logger = prefect.context.get("logger")
+    logger.info("Hello from %s", FLOW_NAME)
+    logger.info(
+        "Platform information: IP = %s, Python = %s, Platform type = %s, OS Version = %s",
+        platform.node(),
+        platform.python_version(),
+        platform.platform(),
+        platform.version(),
+    )
 
 
 with Flow(
@@ -55,4 +63,4 @@ with Flow(
 
 if __name__ == "__main__":
     docker_storage.add_flow(flow)
-    flow.register(project_name="community", build=False)
+    flow.register(project_name="azure", build=False)
