@@ -1,5 +1,5 @@
 """
-In order ti successfully upload the flow script file to GCS on flow registration,
+In order to successfully upload the flow script file to GCS on flow registration,
 you need to have this env variable set in your local environment:
 export GOOGLE_APPLICATION_CREDENTIALS="/Users/anna/repos/packaging-prefect-flows/gcs_sa.json"
 - adjust the above oath to your service account JSON path
